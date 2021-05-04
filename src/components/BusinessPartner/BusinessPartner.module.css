@@ -1,0 +1,14 @@
+.container{
+    font-size: 0;
+    text-align: center;
+}
+
+.partner-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 40px;
+}
+
+.partner-item-image {
+    width: 240px;
+}
