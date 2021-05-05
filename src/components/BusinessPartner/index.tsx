@@ -28,7 +28,7 @@ const BusinessPartner:React.FC = () => {
   return (
     <ul className={style.container}>
       { logoData.map((logo, index) => {
-        return <li className={style['partner-item']}>
+        return <li className={style['partner-item']} key={index}>
           <img className={style['partner-item-image']} src={logo.src} alt={logo.title} />
         </li>
       }) }
