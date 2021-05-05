@@ -1,5 +1,6 @@
 import React from 'react'
 import { Col, Row, Typography } from 'antd'
+import { WithTranslation, withTranslation } from 'react-i18next'
 import style from './HomePage.module.css'
 import { productList1, productList2, productList3 } from './mockup'
 import AppHeader from '../../components/Header'
@@ -13,12 +14,13 @@ import sideImage1 from '../../assets/images/sider_2019_12-09.png'
 import sideImage2 from '../../assets/images/sider_2019_02-04.png'
 import sideImage3 from '../../assets/images/sider_2019_02-04-2.png'
 
-export default class Home extends React.Component {
+class Home extends React.Component<WithTranslation> {
   constructor(props) {
     super(props)
   }
 
   render() {
+    const { t } = this.props
     return (
       <div className={style.App}>
         { <AppHeader /> }
@@ -32,13 +34,13 @@ export default class Home extends React.Component {
               <Trotting />
             </Col>
           </Row>
-          <ProductCollection title={<Typography.Title level={3} type="warning">爆款推荐</Typography.Title>}
+          <ProductCollection title={<Typography.Title level={3} type="warning">{ t('home_page.hot_recommended') }</Typography.Title>}
                              sideImage={sideImage1}
                              products={productList1}/>
-          <ProductCollection title={<Typography.Title level={3} type="danger">新品上市</Typography.Title>}
+          <ProductCollection title={<Typography.Title level={3} type="danger">{ t('home_page.new_arrival') }</Typography.Title>}
                              sideImage={sideImage2}
                              products={productList2}/>
-          <ProductCollection title={<Typography.Title level={3} type="success">国内游推荐</Typography.Title>}
+          <ProductCollection title={<Typography.Title level={3} type="success">{ t('home_page.domestic_travel') }</Typography.Title>}
                              sideImage={sideImage3}
                              products={productList3}/>
         </div>
@@ -49,3 +51,5 @@ export default class Home extends React.Component {
     )
   }
 }
+
+export default withTranslation()(Home)

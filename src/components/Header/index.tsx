@@ -1,20 +1,25 @@
 import React from 'react'
-import {useHistory} from 'react-router-dom'
-import {Menu, Typography, Layout, Button, Dropdown, Input} from 'antd'
-import {GlobalOutlined} from '@ant-design/icons'
+import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Menu, Typography, Layout, Button, Dropdown, Input } from 'antd'
+import { GlobalOutlined } from '@ant-design/icons'
 import logo from '../../assets/logo.svg'
 import style from './Header.module.css'
+import { useLanguageSelector } from '../../redux/hooks'
+import { Dispatch } from 'redux'
+import { LanguageActionTypes, addLanguageAction, changeLanguageAction } from '../../redux/language/languageActions'
+import i18n from "i18next";
+import { useTranslation } from 'react-i18next'
+import translation_zh from '../../i18n/zh.json'
 
 
 export default function AppHeader() {
   const history = useHistory()
+  const language = useLanguageSelector(state => state.language)
+  const languageList = useLanguageSelector(state => state.languageList)
+  const dispatch = useDispatch<Dispatch<LanguageActionTypes>>()
+  const { t } = useTranslation()
 
-  const languageMenu = (
-    <Menu>
-      <Menu.Item>中文</Menu.Item>
-      <Menu.Item>English</Menu.Item>
-    </Menu>
-  )
 
   const navItem: Array<string> = [
     '旅游首页',
@@ -35,6 +40,16 @@ export default function AppHeader() {
     '保险',
   ]
 
+  const languageMenuClickHandler = (e) => {
+    if(e.key === 'new') {
+      const id = Date.now().toString().slice(-3)
+      dispatch(addLanguageAction(`新语言${id}`, `new_lang${id}`))
+    }else {
+      i18n.changeLanguage(e.key)
+      dispatch(changeLanguageAction(e.key))
+    }
+  }
+
 
   return (<div>
     <div className={style['app-header']}>
@@ -43,9 +58,16 @@ export default function AppHeader() {
         <div className={style['top-header-inner']}>
           <Typography.Text>让旅游更开心</Typography.Text>
           <Dropdown.Button style={{marginLeft: 15}}
-                           overlay={languageMenu}
+                           overlay={
+                             <Menu onClick={ languageMenuClickHandler }>
+                               { languageList.map((language) => {
+                                 return <Menu.Item key={language.code}>{language.name}</Menu.Item>
+                               }) }
+                               <Menu.Item key="new">{ t('header.add_new_language') }</Menu.Item>
+                             </Menu>
+                           }
                            icon={<GlobalOutlined/>}>
-            语言
+            { language === 'zh' ? '中文' : 'English' }
           </Dropdown.Button>
           <Button.Group className={style['button-group']}>
             <Button onClick={() => history.push('register')}>注册</Button>
@@ -62,7 +84,11 @@ export default function AppHeader() {
         </span>
       </Layout.Header>
       <Menu mode="horizontal" className={style['main-menu']}>
-        {navItem.map((name, index) => <Menu.Item key={index + 1}>{name}</Menu.Item>)}
+        {Object.keys(translation_zh.header).filter(k => !['slogan',
+          'add_new_language',
+          'title',
+          'register',
+          'signin',].includes(k)).map((key, index) => <Menu.Item key={index + 1}>{ t('header.'+ key) }</Menu.Item>)}
       </Menu>
     </div>
   </div>)
