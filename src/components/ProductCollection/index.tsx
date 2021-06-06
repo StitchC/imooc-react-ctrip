@@ -1,13 +1,13 @@
-import React, { ReactChildren } from 'react'
-import { Row, Col, Typography, Divider } from 'antd'
+import React from 'react'
+import { Row, Col, Divider } from 'antd'
 import ProductImage from './ProductImage'
-import { ProductListData } from '../../mockup'
 import style from './ProductCollection.module.css'
+import { TouristRoutesData } from '../../request'
 
 interface Props {
   title: JSX.Element,
   sideImage: string,
-  products: ProductListData,
+  products: Array<TouristRoutesData>,
 }
 
 const ProductCollection:React.FC<Props> = ({ title, sideImage, products, }) => {
