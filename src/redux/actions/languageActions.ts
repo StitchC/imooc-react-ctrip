@@ -1,20 +1,21 @@
-import { LanguageType } from "./languageReducer";
+import { LanguageType } from '../reducer/languageReducer'
+
+export interface ChangeLanguageAction {
+  type: typeof CHANGE_LANGUAGE,
+  payload: LanguageType
+}
+
+export interface AddLanguageAction {
+  type: typeof ADD_LANGUAGE,
+  payload: { name:string, code:string },
+}
 
 export const CHANGE_LANGUAGE = 'change_language'
 
 export const ADD_LANGUAGE = 'add_language'
 
-interface ChangeLanguageAction {
-  type: typeof CHANGE_LANGUAGE,
-  payload: LanguageType
-}
-
-interface AddLanguageAction {
-  type: typeof ADD_LANGUAGE,
-  payload: { name:string, code:string },
-}
-
 export type LanguageActionTypes = ChangeLanguageAction | AddLanguageAction
+
 
 export const changeLanguageAction = (languageCode: LanguageType):ChangeLanguageAction => {
   return {

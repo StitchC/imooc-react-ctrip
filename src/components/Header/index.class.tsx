@@ -6,15 +6,15 @@ import { withTranslation, WithTranslation } from 'react-i18next'
 import i18n from 'i18next'
 import {Menu, Typography, Layout, Button, Dropdown, Input} from 'antd'
 import { GlobalOutlined } from '@ant-design/icons'
-import { LanguageState } from '../../redux/store'
-import { addLanguageAction, changeLanguageAction } from '../../redux/language/languageActions'
+import { GlobalStore } from '../../redux/store'
+import { addLanguageAction, changeLanguageAction } from '../../redux/actions/languageActions'
 import logo from '../../assets/logo.svg'
 import style from './Header.module.css'
 import translation_zh from '../../i18n/zh.json'
-import { LanguageType } from "../../redux/language/languageReducer";
+import { LanguageType } from '../../redux/reducer/languageReducer'
 
 
-const mapStateToProps = (state:LanguageState) => {
+const mapStateToProps = (state:GlobalStore) => {
   return {
     language: state.language,
     languageList: state.languageList,

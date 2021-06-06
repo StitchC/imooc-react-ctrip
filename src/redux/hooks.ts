@@ -2,6 +2,6 @@ import {
   useSelector as useReduxSelector,
   TypedUseSelectorHook,
 } from 'react-redux'
-import { LanguageState } from './store'
+import { GlobalStore } from './store'
 
-export const useLanguageSelector:TypedUseSelectorHook<LanguageState> = useReduxSelector
+export const useLanguageSelector:TypedUseSelectorHook<GlobalStore> = useReduxSelector

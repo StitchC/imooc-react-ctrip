@@ -1,12 +1,33 @@
 import { createStore } from 'redux'
-import languageReducer, { LanguageList, LanguageType } from './language/languageReducer'
+import reducer from './reducer'
+import { LanguageList, LanguageType } from './reducer/languageReducer'
 
-const store = createStore(languageReducer)
 
-export default store
+// 全局store 类型
+export interface GlobalStore {
+  language: LanguageType,
+  languageList: LanguageList,
+}
 
-export type LanguageState = ReturnType<typeof store.getState>
+export const defaultStore:GlobalStore = {
+  language: 'zh',
+  languageList: [
+    {
+      name: '中文',
+      code: 'zh',
+    },
+    {
+      name: 'English',
+      code: 'en',
+    }
+  ]
+}
 
-export type LanguageReducerList = LanguageList
+console.log(reducer)
 
-export type LanguageReducerType = LanguageType
+export default createStore((state:GlobalStore = defaultStore, action) => {
+  if(!reducer[action.type]) {
+    return state
+  }
+  return reducer[action.type](state, action)
+})

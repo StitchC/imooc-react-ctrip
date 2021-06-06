@@ -7,8 +7,8 @@ import logo from '../../assets/logo.svg'
 import style from './Header.module.css'
 import { useLanguageSelector } from '../../redux/hooks'
 import { Dispatch } from 'redux'
-import { LanguageActionTypes, addLanguageAction, changeLanguageAction } from '../../redux/language/languageActions'
-import i18n from "i18next";
+import { addLanguageAction, changeLanguageAction, LanguageActionTypes } from '../../redux/actions'
+import i18n from 'i18next'
 import { useTranslation } from 'react-i18next'
 import translation_zh from '../../i18n/zh.json'
 
@@ -20,25 +20,6 @@ export default function AppHeader() {
   const dispatch = useDispatch<Dispatch<LanguageActionTypes>>()
   const { t } = useTranslation()
 
-
-  const navItem: Array<string> = [
-    '旅游首页',
-    '周末游',
-    '跟团游',
-    '自由行',
-    '私家团',
-    '邮轮',
-    '酒店+景点',
-    '当地玩乐',
-    '主题游',
-    '定制游',
-    '游学',
-    '签证',
-    '企业游',
-    '高端游',
-    '爱玩户外',
-    '保险',
-  ]
 
   const languageMenuClickHandler = (e) => {
     if(e.key === 'new') {
