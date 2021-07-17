@@ -1,12 +1,19 @@
 import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import {Menu, Typography, Layout, Button, Dropdown, Input} from 'antd'
-import {GlobalOutlined} from '@ant-design/icons'
+import { Menu, Typography, Layout, Button, Dropdown, Input } from 'antd'
+import { GlobalOutlined } from '@ant-design/icons'
 import logo from '../../assets/logo.svg'
 import style from './Header.module.css'
+import store from '../../redux/store'
+import { languageType, LanguageListType } from '../../redux/languageReducer'
 
 interface Props extends RouteComponentProps {
 
+}
+
+interface State {
+  language:languageType
+  languageList: LanguageListType
 }
 
 const navItem: Array<string> = [
@@ -35,9 +42,14 @@ const languageMenu = (
   </Menu>
 )
 
-class AppHeader extends React.Component<Props>{
+class AppHeader extends React.Component<Props, State>{
   constructor(props) {
     super(props)
+    const { language, languageList } = store.getState()
+    this.state = {
+      language,
+      languageList,
+    }
   }
 
   render() {
@@ -48,7 +60,7 @@ class AppHeader extends React.Component<Props>{
           <div className={style['top-header-inner']}>
             <Typography.Text>让旅游更开心</Typography.Text>
             <Dropdown.Button style={{marginLeft: 15}}
-                             overlay={languageMenu}
+                             overlay={<Menu>{ this.state.languageList.map(languageOptions => <Menu.Item key={languageOptions.code}>{languageOptions.name}</Menu.Item>) }</Menu>}
                              icon={<GlobalOutlined/>}>
               语言
             </Dropdown.Button>

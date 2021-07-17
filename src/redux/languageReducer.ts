@@ -4,8 +4,8 @@ interface LanguageListItem {
 }
 
 interface LanguageState {
-  language: 'en' | 'zh'
-  languageList: Array<LanguageListItem>
+  language: languageType
+  languageList: LanguageListType
 }
 
 const defaultState:LanguageState = {
@@ -15,6 +15,10 @@ const defaultState:LanguageState = {
     { name: '英文', code: 'en' },
   ]
 }
+
+export type languageType = 'en' | 'zh'
+
+export type LanguageListType = Array<LanguageListItem>
 
 export default (state = defaultState, action) => {
   return state
